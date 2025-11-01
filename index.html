@@ -23,13 +23,15 @@
     <section class="hero">
       <div class="wrapper">
         <div class="hero__inner">
-          <h1 class="hero__title">Best Jewellery Collection</h1>
-          <p class="hero__subtitle">
-            It is a long established fact that a reader will be distracted by
-            the readable content of a page when looking at its layout. The point
-            of using Lorem
-          </p>
-          <a href="#" class="btn btn--cta">Shop Now</a>
+          <div class="hero__content">
+            <h1 class="hero__title">Best Jewellery Collection</h1>
+            <p class="hero__subtitle">
+              It is a long established fact that a reader will be distracted by
+              the readable content of a page when looking at its layout. The
+              point of using Lorem
+            </p>
+            <a href="#" class="btn btn--cta">Shop Now</a>
+          </div>
         </div>
       </div>
     </section>
@@ -40,33 +42,42 @@
         <div class="articles__inner">
           <!-- Article 1 -->
           <article class="article">
-            <img
-              src="./assets/images/b1.jpg"
-              alt="Lady in red jewellery"
-              class="article__img"
-            />
-            <time><span>14</span>July</time>
-            <h2 class="article__title">Lorem ipsum dolor sit.</h2>
-            <p class="article__description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-              illum doloremque facere libero, placeat optio!
-            </p>
-            <button class="read-more-btn">Read More</button>
+            <div class="article__top">
+              <img
+                src="./assets/images/b1.jpg"
+                alt="Lady in red jewellery"
+                class="article__img"
+              />
+              <time class="article__date"><span>14</span>July</time>
+            </div>
+            <div class="article__content">
+              <h2 class="article__title">Lorem ipsum dolor sit.</h2>
+              <p class="article__description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+                illum doloremque facere libero, placeat optio!
+              </p>
+              <button class="read-more-btn">Read More</button>
+            </div>
           </article>
+
           <!-- Article 2 -->
           <article class="article">
-            <img
-              src="./assets/images/b2.jpg"
-              alt="Lady in orange hood jewellery"
-              class="article__img"
-            />
-            <time><span>15</span>July</time>
-            <h2 class="article__title">Lorem ipsum dolor sit amet.</h2>
-            <p class="article__description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
-              illum doloremque facere libero, placeat optio!
-            </p>
-            <button class="read-more-btn">Read More</button>
+            <div class="article__top">
+              <img
+                src="./assets/images/b2.jpg"
+                alt="Lady in orange hood jewellery"
+                class="article__img"
+              />
+              <time class="article__date"><span>15</span>July</time>
+            </div>
+            <div class="article__content">
+              <h2 class="article__title">Lorem ipsum dolor sit amet.</h2>
+              <p class="article__description">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
+                illum doloremque facere libero, placeat optio!
+              </p>
+              <button class="read-more-btn">Read More</button>
+            </div>
           </article>
         </div>
       </div>
@@ -75,7 +86,112 @@
     <!-- Products -->
     <section class="products">
       <div class="wrapper">
-        <div class="products__inner"></div>
+        <div class="products__inner">
+          <!-- Product Card #1 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p1.png"
+              alt="Gold ring with diamond"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Gold Ring</h3>
+              <p class="product-card__price">Price: <span>$250</span></p>
+            </div>
+          </a>
+          <!-- Product Card #2 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p2.png"
+              alt="Silver ring with blue gem"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Silver Ring</h3>
+              <p class="product-card__price">Price: <span>$150</span></p>
+            </div>
+          </a>
+          <!-- Product Card #3 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p3.png"
+              alt="Gold necklace with pendant"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Gold Necklace</h3>
+              <p class="product-card__price">Price: <span>$300</span></p>
+            </div>
+          </a>
+          <!-- Product Card #4 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p4.png"
+              alt="Silver bracelet with charms"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Silver Bracelet</h3>
+              <p class="product-card__price">Price: <span>$200</span></p>
+            </div>
+          </a>
+          <!-- Product Card #5 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p5.png"
+              alt="Diamond earrings"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Diamond Earrings</h3>
+              <p class="product-card__price">Price: <span>$400</span></p>
+            </div>
+          </a>
+          <!-- Product Card #6 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p6.png"
+              alt="Pearl necklace"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Pearl Necklace</h3>
+              <p class="product-card__price">Price: <span>$350</span></p>
+            </div>
+          </a>
+          <!-- Product Card #7 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p7.png"
+              alt="Gold bangle"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Gold Bangle</h3>
+              <p class="product-card__price">Price: <span>$275</span></p>
+            </div>
+          </a>
+          <!-- Product Card #8 -->
+          <a href="#" class="product-card">
+            <span class="product-card__badge">New</span>
+            <img
+              src="./assets/images/p8.png"
+              alt="Silver pendant"
+              class="product-card__img"
+            />
+            <div class="product-card__details">
+              <h3 class="product-card__name">Silver Pendant</h3>
+              <p class="product-card__price">Price: <span>$180</span></p>
+            </div>
+          </a>
+        </div>
       </div>
     </section>
   </body>
