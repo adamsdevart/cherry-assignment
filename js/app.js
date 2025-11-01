@@ -34,3 +34,55 @@ if (scrollToTopBtn && heroSection) {
     }
   });
 }
+
+/**
+ * Hamburger Menu Toggle
+ * Toggles menu visibility and hamburger animation state
+ */
+const hamburger = document.getElementById("hamburger");
+const navigation = document.getElementById("navigation");
+
+if (hamburger && navigation) {
+  const toggleMenu = () => {
+    const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
+    const newState = !isExpanded;
+
+    // Update aria-expanded for accessibility
+    hamburger.setAttribute("aria-expanded", String(newState));
+
+    // Toggle menu visibility
+    navigation.classList.toggle("menu--open");
+
+    // Toggle hamburger animation state (required by hamburgers.css)
+    hamburger.classList.toggle("is-active");
+  };
+
+  // Click handler
+  hamburger.addEventListener("click", toggleMenu);
+
+  // Keyboard handler for accessibility
+  hamburger.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleMenu();
+    }
+  });
+
+  // Close menu when clicking outside on mobile
+  document.addEventListener("click", (e) => {
+    const isClickInsideMenu = navigation.contains(e.target);
+    const isClickOnHamburger = hamburger.contains(e.target);
+    const isMenuOpen = navigation.classList.contains("menu--open");
+
+    if (isMenuOpen && !isClickInsideMenu && !isClickOnHamburger) {
+      toggleMenu();
+    }
+  });
+
+  // Close menu on escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navigation.classList.contains("menu--open")) {
+      toggleMenu();
+    }
+  });
+}

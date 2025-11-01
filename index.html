@@ -15,10 +15,46 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./css/hamburgers.css" />
     <link rel="stylesheet" href="./css/styles.css" />
     <title>Cherry Assignment</title>
   </head>
   <body>
+    <header class="navbar">
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <img src="./assets/images/logo.png" alt="Cherry Logo" />
+      </a>
+      <!-- Menu -->
+      <menu class="menu" id="navigation">
+        <li class="menu__item">
+          <a href="#" class="menu__link">Home</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">About</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">Shop</a>
+        </li>
+        <li class="menu__item">
+          <a href="#" class="menu__link">Blog</a>
+        </li>
+      </menu>
+
+      <!-- Menu Toggler -->
+      <button
+        id="hamburger"
+        class="hamburger hamburger--elastic"
+        type="button"
+        aria-label="Menu"
+        aria-controls="navigation"
+        aria-expanded="false"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+    </header>
     <!-- Hero -->
     <section class="hero">
       <div class="wrapper">
@@ -85,7 +121,6 @@
 
     <!-- Products -->
     <section class="products">
-
       <div class="wrapper">
         <div class="products__inner">
           <!-- Product Card #1 -->
@@ -202,21 +237,20 @@
         </div>
 
         <a href="#" class="btn">View All Products</a>
-
       </div>
     </section>
 
-
-    <button 
-      id="scrollToTopBtn" 
-      type="button" 
+    <!-- Scroll to top button  -->
+    <button
+      id="scrollToTopBtn"
+      type="button"
       aria-label="Scroll to top of page"
       title="Go to top"
       class="scroll-to-top"
     >
       <span class="scroll-to-top__icon" aria-hidden="true">↑</span>
     </button>
-    <script src="./js/app.js"></script>
 
+    <script src="./js/app.js"></script>
   </body>
 </html>
