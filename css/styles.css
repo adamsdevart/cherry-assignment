@@ -148,7 +148,6 @@ html {
 
 /* ARTICLES STYLES */
 .articles {
-  border: 4px dashed red;
 }
 
 .articles__inner {
@@ -227,28 +226,37 @@ html {
 
 /* Products */
 .products {
-  border: 4px dashed blue;
+  margin-block-end: 6rem;
 }
 
 .products__inner {
   display: flex;
-  flex-wrap: wrap;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 0.625rem;
-  padding-block-end: 5.375rem;
+  padding-block-end: 1rem;
+  margin-block-end: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: mandatory x proximity;
+  -webkit-overflow-scrolling: touch;
 }
 
 .product-card {
-  flex: 1 1 30%;
+  flex: 1 0 250px;
   background-color: #ededed;
   padding: 1rem;
   text-decoration: none;
-  border: 4px dashed red;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media screen and (min-width: 900px) {
+  .products__inner {
+    flex-wrap: wrap;
+  }
+  .product-card {
+    flex: 1 1 30%;
+  }
 }
 
 .product-card__badge {
@@ -283,4 +291,87 @@ html {
   height: 9.375rem;
   object-fit: contain;
   margin-block-end: 1rem;
+}
+
+.btn {
+  display: block;
+  width: fit-content;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  margin-inline: auto;
+  background-color: #e85c4b;
+  color: #ffffff;
+  padding: 0.875rem 1.75rem;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: #e85c4b;
+  color: #ffffff;
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(1rem);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease,
+    background-color 0.3s ease;
+
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.scroll-to-top--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  background-color: #cf6b55;
+  transform: translateY(-0.25rem);
+}
+
+.scroll-to-top:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.scroll-to-top:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.scroll-to-top__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .scroll-to-top__icon {
+    font-size: 1.25rem;
+  }
 }
