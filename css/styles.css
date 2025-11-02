@@ -163,7 +163,7 @@ html {
   @media (max-width: 600px) {
     display: flex;
     z-index: 12;
-    position: relative; 
+    position: relative;
   }
 }
 
@@ -177,7 +177,6 @@ html {
 
 /* HERO STYLES */
 .hero {
-  background-color: #160e0b;
   color: #ffffff;
   background-image: url("../assets/images/slider-bg.jpg");
   background-position: center;
@@ -193,7 +192,7 @@ html {
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: min(90dvh, 60rem);
+  min-height: 700px;
 }
 
 .hero__content {
@@ -229,15 +228,19 @@ html {
 /* ARTICLES STYLES */
 .articles__inner {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
-  gap: 10rem 2.5rem;
+  gap: 9rem 2.5rem;
   padding-block-end: 5.375rem;
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  }
 }
 
 .article {
   margin-block-start: -6.25rem;
   background-color: #f1f2f4;
-
+  max-width: 440px;
+  margin-inline: auto;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
