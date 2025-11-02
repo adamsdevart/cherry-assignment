@@ -222,6 +222,144 @@ const initCountdownTimer = () => {
 };
 
 /**
+ * Product Carousel Auto-Scroll
+ * Automatically scrolls through products on mobile devices
+ */
+const initProductCarousel = () => {
+  const productsInner = document.querySelector(".products__inner");
+  if (!productsInner) return;
+
+  const MOBILE_BREAKPOINT = 900;
+  const AUTO_SCROLL_DELAY = 3000; // 3 seconds
+  const PAUSE_AFTER_INTERACTION = 5000; // Resume after 5 seconds of inactivity
+
+  let autoScrollInterval = null;
+  let userInteractionTimeout = null;
+  let isUserInteracting = false;
+  let isAutoScrolling = false; // Track if scroll is programmatic
+
+  const isMobile = () => window.innerWidth < MOBILE_BREAKPOINT;
+
+  const getScrollPosition = () => {
+    return {
+      scrollLeft: productsInner.scrollLeft,
+      scrollWidth: productsInner.scrollWidth,
+      clientWidth: productsInner.clientWidth,
+    };
+  };
+
+  const scrollToNext = () => {
+    if (!isMobile() || isUserInteracting) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = getScrollPosition();
+    const cards = productsInner.querySelectorAll(".product-card");
+    
+    if (cards.length === 0) return;
+
+    // Calculate next card position
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 10; // 0.625rem ≈ 10px
+    const nextPosition = scrollLeft + cardWidth + gap;
+    const maxScroll = scrollWidth - clientWidth;
+
+    // Mark as auto-scrolling to ignore scroll event
+    isAutoScrolling = true;
+
+    // Check if we've reached the end
+    if (nextPosition >= maxScroll - 5) {
+      // Loop back to start
+      productsInner.scrollTo({
+        left: 0,
+        behavior: "smooth",
+      });
+    } else {
+      // Scroll to next card
+      productsInner.scrollTo({
+        left: nextPosition,
+        behavior: "smooth",
+      });
+    }
+
+    // Reset flag after scroll completes
+    setTimeout(() => {
+      isAutoScrolling = false;
+    }, 500);
+  };
+
+  const startAutoScroll = () => {
+    if (!isMobile() || autoScrollInterval) return;
+
+    autoScrollInterval = setInterval(scrollToNext, AUTO_SCROLL_DELAY);
+  };
+
+  const stopAutoScroll = () => {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  };
+
+  const pauseOnUserInteraction = () => {
+    isUserInteracting = true;
+    stopAutoScroll();
+
+    // Clear any existing timeout
+    if (userInteractionTimeout) {
+      clearTimeout(userInteractionTimeout);
+    }
+
+    // Resume after inactivity
+    userInteractionTimeout = setTimeout(() => {
+      isUserInteracting = false;
+      if (isMobile()) {
+        startAutoScroll();
+      }
+    }, PAUSE_AFTER_INTERACTION);
+  };
+
+  // Track manual scrolling (only pause if user initiated)
+  productsInner.addEventListener("scroll", () => {
+    // Only pause if scroll was initiated by user, not our auto-scroll
+    if (!isAutoScrolling && !isUserInteracting) {
+      pauseOnUserInteraction();
+    }
+  });
+
+  // Pause on touch/mouse interaction
+  productsInner.addEventListener("touchstart", pauseOnUserInteraction);
+  productsInner.addEventListener("mousedown", pauseOnUserInteraction);
+  productsInner.addEventListener("mouseenter", pauseOnUserInteraction);
+
+  // Resume on mouse leave (if user stops interacting)
+  productsInner.addEventListener("mouseleave", () => {
+    if (!isUserInteracting && isMobile()) {
+      startAutoScroll();
+    }
+  });
+
+  // Handle window resize
+  const handleResize = () => {
+    if (isMobile()) {
+      if (!autoScrollInterval && !isUserInteracting) {
+        startAutoScroll();
+      }
+    } else {
+      stopAutoScroll();
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  // Start auto-scroll on mobile
+  if (isMobile()) {
+    // Small delay to ensure layout is complete
+    setTimeout(() => {
+      startAutoScroll();
+    }, 1000);
+  }
+};
+
+/**
  * Initialize all features when DOM is ready
  */
 const init = () => {
@@ -229,6 +367,7 @@ const init = () => {
   initScrollToTop();
   initHamburgerMenu();
   initReadMore();
+  initProductCarousel();
 };
 
 // Start the application

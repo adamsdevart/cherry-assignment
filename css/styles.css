@@ -574,6 +574,7 @@ html {
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease;
+  scroll-snap-align: start;
 }
 
 .product-card:hover {
