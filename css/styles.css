@@ -230,6 +230,7 @@ html {
   display: grid;
   gap: 9rem 2.5rem;
   padding-block-end: 5.375rem;
+  min-height: 27.625rem;
 
   @media (min-width: 900px) {
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
@@ -287,21 +288,33 @@ html {
   font-size: 1rem;
   line-height: 1.6;
   margin-block-end: 1rem;
+  transition: all 0.3s ease;
 }
 
 .read-more-btn {
   background-color: transparent;
   color: #000000;
-  border: 1px solid inherit;
+  border: 1px solid #000000;
   padding: 0.6rem 1.5rem;
   border-radius: 9px;
   cursor: pointer;
   line-height: 1;
-  transition: background-color 0.3s ease;
+  font-family: inherit;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .read-more-btn:hover {
   background-color: #e0e0e0;
+  color: #000000;
+}
+
+.read-more-btn:focus {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+.read-more-btn:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Products */
