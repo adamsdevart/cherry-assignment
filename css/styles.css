@@ -95,6 +95,160 @@ html {
   margin-inline: auto;
 }
 
+/* Promotional Countdown Banner */
+.promo-banner {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #e85c4b 0%, #cf6b55 100%);
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.promo-banner--hidden {
+  display: none;
+}
+
+.promo-banner__inner {
+  max-width: 1400px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.promo-banner__content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1;
+}
+
+.promo-banner__text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.countdown__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.countdown__value {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  min-width: 2.5rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.countdown__label {
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.countdown__separator {
+  font-size: 1.25rem;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-inline: 0.125rem;
+}
+
+.promo-banner__close {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+}
+
+.promo-banner__close:hover {
+  opacity: 0.7;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.promo-banner__close:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.promo-banner__close:focus:not(:focus-visible) {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .promo-banner {
+    padding: 0.625rem 0.75rem;
+  }
+
+  .promo-banner__content {
+    gap: 0.75rem;
+  }
+
+  .promo-banner__text {
+    font-size: 0.75rem;
+    white-space: normal;
+    text-align: center;
+    width: 100%;
+  }
+
+  .countdown {
+    gap: 0.375rem;
+  }
+
+  .countdown__value {
+    font-size: 1rem;
+    padding: 0.375rem 0.5rem;
+    min-width: 2rem;
+  }
+
+  .countdown__label {
+    font-size: 0.5rem;
+  }
+
+  .countdown__separator {
+    font-size: 1rem;
+    margin-inline: 0;
+  }
+
+  .promo-banner__close {
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 1.25rem;
+  }
+}
+
 .navbar {
   display: flex;
   gap: 2rem;
@@ -128,6 +282,8 @@ html {
   text-align: center;
   list-style: none;
   padding-inline: 4rem;
+  max-width: 57rem;
+  margin-inline: auto;
 
   @media (max-width: 600px) {
     position: fixed;
@@ -145,7 +301,9 @@ html {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-100%);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    /* Base transitions - delays added dynamically when closing */
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s,
+      transform 0.3s ease;
   }
 }
 
@@ -154,6 +312,22 @@ html {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    /* Immediate transitions when opening */
+    transition: opacity 0.3s ease, visibility 0s linear, transform 0.3s ease;
+  }
+}
+
+/* When closing (not open), delay hiding to allow items to fade first */
+@media (max-width: 600px) {
+  .menu:not(.menu--open) {
+    /* 
+     * Items fade out: last item finishes at 0.15s delay + 0.3s duration = 0.45s
+     * Keep container visible and opaque until items finish fading
+     */
+    transition: opacity 0.2s ease 0.4s,
+      /* Start fading slightly after items start */ visibility 0.2s linear 0.4s,
+      /* Hide after all items finish (0.45s + buffer) */ transform 0.2s ease
+        0.4s;
   }
 }
 
@@ -175,6 +349,59 @@ html {
   font-size: max(25px, 1.125rem);
 }
 
+/* Menu item animations for mobile */
+@media (max-width: 600px) {
+  .menu__item {
+    opacity: 0;
+    transform: translateY(-1rem);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  /* Staggered animation delays for menu items when opening */
+  .menu--open .menu__item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .menu--open .menu__item:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+
+  .menu--open .menu__item:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .menu--open .menu__item:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .menu--open .menu__item:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+
+  /* Reverse staggered exit animations when closing */
+  .menu:not(.menu--open) .menu__item {
+    transition-delay: 0s;
+    transition-duration: 0.3s;
+  }
+
+  .menu:not(.menu--open) .menu__item:nth-child(4) {
+    transition-delay: 0s;
+  }
+
+  .menu:not(.menu--open) .menu__item:nth-child(3) {
+    transition-delay: 0.05s;
+  }
+
+  .menu:not(.menu--open) .menu__item:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .menu:not(.menu--open) .menu__item:nth-child(1) {
+    transition-delay: 0.15s;
+  }
+}
+
 /* HERO STYLES */
 .hero {
   color: #ffffff;
@@ -192,7 +419,11 @@ html {
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 700px;
+  padding-block: 5rem 13rem;
+
+  @media (min-width: 768px) {
+    padding-block: 10rem 12rem;
+  }
 }
 
 .hero__content {

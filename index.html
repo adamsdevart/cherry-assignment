@@ -20,6 +20,45 @@
     <title>Cherry Assignment</title>
   </head>
   <body>
+    <!-- Promotional Countdown Banner -->
+    <div class="promo-banner" id="promoBanner">
+      <div class="promo-banner__inner">
+        <div class="promo-banner__content">
+          <span class="promo-banner__text"
+            >Limited Time Offer! Sale Ends In:</span
+          >
+          <div class="countdown" id="countdown">
+            <div class="countdown__item">
+              <span class="countdown__value" id="days">00</span>
+              <span class="countdown__label">Days</span>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+              <span class="countdown__value" id="hours">00</span>
+              <span class="countdown__label">Hours</span>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+              <span class="countdown__value" id="minutes">00</span>
+              <span class="countdown__label">Minutes</span>
+            </div>
+            <span class="countdown__separator">:</span>
+            <div class="countdown__item">
+              <span class="countdown__value" id="seconds">00</span>
+              <span class="countdown__label">Seconds</span>
+            </div>
+          </div>
+        </div>
+        <button
+          class="promo-banner__close"
+          id="promoBannerClose"
+          aria-label="Close promotional banner"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+
     <header class="navbar">
       <!-- Logo -->
       <a href="#" class="logo">

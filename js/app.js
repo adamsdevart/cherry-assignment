@@ -14,6 +14,9 @@ const handleKeyboardActivation = (event, callback) => {
 const isVisible = (element, className) =>
   element.classList.contains(className);
 
+// Format number with leading zero
+const padZero = (num) => String(num).padStart(2, "0");
+
 /**
  * Scroll to Top Button
  * Shows button after scrolling 30% down the page using Intersection Observer
@@ -56,8 +59,15 @@ const initHamburgerMenu = () => {
     const newState = !isExpanded;
 
     hamburger.setAttribute("aria-expanded", String(newState));
-    menu.classList.toggle("menu--open");
     hamburger.classList.toggle("is-active");
+
+    if (newState) {
+      // Opening: add class immediately to trigger entrance animations
+      menu.classList.add("menu--open");
+    } else {
+      // Closing: remove class to trigger exit animations, then hide menu container
+      menu.classList.remove("menu--open");
+    }
   };
 
   const closeMenu = () => {
@@ -118,9 +128,104 @@ const initReadMore = () => {
 };
 
 /**
+ * Promotional Countdown Timer
+ * Displays countdown for sale expiration and allows banner dismissal
+ */
+const initCountdownTimer = () => {
+  const banner = document.getElementById("promoBanner");
+  const closeBtn = document.getElementById("promoBannerClose");
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+
+  if (!banner) return;
+
+  // Set sale end date (7 days from now by default)
+  // You can modify this date as needed
+  const saleEndDate = new Date();
+  saleEndDate.setDate(saleEndDate.getDate() + 7);
+  saleEndDate.setHours(23, 59, 59, 999); // End of day
+
+  const updateCountdown = () => {
+    const now = new Date().getTime();
+    const distance = saleEndDate.getTime() - now;
+
+    // If sale has ended, hide banner
+    if (distance < 0) {
+      banner.classList.add("promo-banner--hidden");
+      return;
+    }
+
+    // Calculate time units
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Update DOM
+    if (daysEl) daysEl.textContent = padZero(days);
+    if (hoursEl) hoursEl.textContent = padZero(hours);
+    if (minutesEl) minutesEl.textContent = padZero(minutes);
+    if (secondsEl) secondsEl.textContent = padZero(seconds);
+  };
+
+  // Adjust navbar position based on banner visibility
+  const updateNavbarPosition = () => {
+    const navbar = document.querySelector(".navbar");
+    if (!navbar) return;
+
+    const isBannerVisible = !banner.classList.contains("promo-banner--hidden");
+    if (isBannerVisible) {
+      const bannerHeight = banner.offsetHeight;
+      navbar.style.top = `${bannerHeight}px`;
+    } else {
+      navbar.style.top = "0";
+    }
+  };
+
+  // Close banner handler
+  const closeBanner = () => {
+    banner.classList.add("promo-banner--hidden");
+    sessionStorage.setItem("promoBannerDismissed", "true");
+    setTimeout(updateNavbarPosition, 100);
+  };
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeBanner);
+    closeBtn.addEventListener("keydown", (e) => {
+      handleKeyboardActivation(e, closeBanner);
+    });
+  }
+
+  // Check if banner was dismissed this session
+  if (sessionStorage.getItem("promoBannerDismissed") === "true") {
+    banner.classList.add("promo-banner--hidden");
+    updateNavbarPosition();
+    return;
+  }
+
+  // Update countdown immediately and then every second
+  updateCountdown();
+  const interval = setInterval(() => {
+    updateCountdown();
+    // Clear interval if banner is hidden
+    if (banner.classList.contains("promo-banner--hidden")) {
+      clearInterval(interval);
+      updateNavbarPosition();
+    }
+  }, 1000);
+
+  // Update navbar position on resize and initial load
+  updateNavbarPosition();
+  window.addEventListener("resize", updateNavbarPosition);
+};
+
+/**
  * Initialize all features when DOM is ready
  */
 const init = () => {
+  initCountdownTimer();
   initScrollToTop();
   initHamburgerMenu();
   initReadMore();
